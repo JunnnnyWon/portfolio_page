@@ -390,10 +390,11 @@ export const projectDetails: Record<ProjectSlug, ProjectDetail> = {
         stack: ["UE5", "Grok", "Kling", "Wan", "AI Animation", "Cinematic"],
         media: [
           {
-            type: "image",
-            src: "/media/vfx-front.png",
-            alt: "그림자 복도 프론트 구도 콘셉트 이미지",
-            caption: "메인 장면의 전면 구도와 빛의 흐름을 정리한 콘셉트 컷입니다.",
+            type: "video",
+            src: "/media/vfx-prob4.mp4",
+            alt: "대전 VFX 아카데미 수정본 prob4 영상",
+            poster: "/media/vfx-shot-4.jpeg",
+            caption: "대전 VFX 아카데미 작업본 중 공유 가능한 prob4 영상을 연결했습니다.",
           },
           {
             type: "image",
