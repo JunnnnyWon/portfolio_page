@@ -1,0 +1,23 @@
+<svg width="1200" height="1600" viewBox="0 0 1200 1600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="1600" fill="#F7FAFF"/>
+  <rect x="36" y="36" width="1128" height="1528" rx="28" stroke="#0E4AA8" stroke-width="12"/>
+  <rect x="72" y="72" width="1056" height="1456" rx="20" stroke="#8BB3F5" stroke-width="4" stroke-dasharray="18 14"/>
+  <rect x="122" y="128" width="956" height="1344" rx="30" fill="white"/>
+  <text x="600" y="220" text-anchor="middle" fill="#0E4AA8" font-family="Georgia, 'Times New Roman', serif" font-size="80" font-weight="700">2025</text>
+  <text x="600" y="300" text-anchor="middle" fill="#173E7A" font-family="Arial, Helvetica, sans-serif" font-size="34" letter-spacing="4">THE 9TH COLLEGE STUDENTS</text>
+  <text x="600" y="346" text-anchor="middle" fill="#173E7A" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" letter-spacing="2">GAME JAM CHALLENGE</text>
+  <rect x="310" y="406" width="580" height="54" rx="27" fill="#0E4AA8"/>
+  <text x="600" y="443" text-anchor="middle" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" letter-spacing="3">AWARD SUMMARY</text>
+  <text x="600" y="574" text-anchor="middle" fill="#1B2A41" font-family="Georgia, 'Times New Roman', serif" font-size="88" font-weight="700">BEST GAME DESIGN</text>
+  <text x="600" y="648" text-anchor="middle" fill="#1B2A41" font-family="Georgia, 'Times New Roman', serif" font-size="88" font-weight="700">AWARD</text>
+  <text x="600" y="760" text-anchor="middle" fill="#5A6C8F" font-family="Arial, Helvetica, sans-serif" font-size="26" letter-spacing="5">AWARD-WINNING WORK</text>
+  <text x="600" y="838" text-anchor="middle" fill="#0E4AA8" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="700">KPI: OVERLOAD</text>
+  <text x="600" y="952" text-anchor="middle" fill="#5A6C8F" font-family="Arial, Helvetica, sans-serif" font-size="26" letter-spacing="5">CREATOR</text>
+  <text x="600" y="1018" text-anchor="middle" fill="#1B2A41" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="700">ChoWonJun</text>
+  <line x1="220" y1="1110" x2="980" y2="1110" stroke="#D9E4FB" stroke-width="4"/>
+  <text x="260" y="1194" fill="#5A6C8F" font-family="Arial, Helvetica, sans-serif" font-size="28" letter-spacing="4">TEAM</text>
+  <text x="260" y="1248" fill="#1B2A41" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="700">International collaboration with 5 Russian and Chinese students</text>
+  <text x="260" y="1336" fill="#5A6C8F" font-family="Arial, Helvetica, sans-serif" font-size="28" letter-spacing="4">FORMAT</text>
+  <text x="260" y="1390" fill="#1B2A41" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="700">2-day game jam / Programmer role</text>
+  <text x="600" y="1494" text-anchor="middle" fill="#5A6C8F" font-family="Arial, Helvetica, sans-serif" font-size="26" letter-spacing="3">Changchun, China / December 19-21, 2025</text>
+</svg>
