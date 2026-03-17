@@ -29,6 +29,8 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 html,
@@ -237,6 +239,8 @@ a {
 .hero-stage__body,
 .hero-stage__stars {
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  word-break: keep-all;
+  overflow-wrap: normal;
 }
 
 .hero-stage__brand strong {
@@ -272,6 +276,7 @@ a {
   font-weight: 800;
   line-height: 1.14;
   letter-spacing: -0.06em;
+  text-wrap: balance;
 }
 
 .hero-stage__visual {
@@ -330,6 +335,7 @@ a {
   top: 20.05rem;
   left: calc(50% - 10.95rem);
   width: 5.1rem;
+  z-index: 2;
   filter: drop-shadow(0 0.8rem 1.6rem rgba(24, 18, 50, 0.24));
 }
 
@@ -338,6 +344,7 @@ a {
   left: 50%;
   display: grid;
   gap: 0.05rem;
+  z-index: 1;
   transform: translateX(-50%) rotate(-7deg);
   transform-origin: center center;
   align-items: center;
@@ -369,6 +376,7 @@ a {
   left: calc(50% + 6.2rem);
   top: 31.1rem;
   width: 4.7rem;
+  z-index: 3;
   filter: drop-shadow(0 0.75rem 1.55rem rgba(20, 15, 48, 0.3));
 }
 
@@ -386,6 +394,7 @@ a {
   line-height: 1.76;
   letter-spacing: -0.04em;
   color: rgba(255, 255, 255, 0.94);
+  text-wrap: pretty;
 }
 
 .hero-stage__body {
@@ -402,6 +411,32 @@ a {
   font-size: 0.7rem;
   letter-spacing: 0.22em;
   color: rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 31rem) {
+  .scene--hero,
+  .hero-stage {
+    min-height: max(100svh, 56rem);
+  }
+
+  .hero-stage {
+    height: max(100svh, 56rem);
+  }
+
+  .hero-stage__copy {
+    max-width: 18.8rem;
+    bottom: 1.2rem;
+  }
+
+  .hero-stage__intro,
+  .hero-stage__body {
+    font-size: 0.93rem;
+    line-height: 1.72;
+  }
+
+  .hero-stage__cursor {
+    left: calc(50% + 6.2rem + 18px);
+  }
 }
 
 @media (max-width: 23rem) {
@@ -465,7 +500,7 @@ a {
 
   .hero-stage__cursor {
     top: 29.2rem;
-    left: calc(50% + 5.3rem);
+    left: calc(50% + 5.3rem + 18px);
     width: 4rem;
   }
 
