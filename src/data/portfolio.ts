@@ -262,8 +262,8 @@ export const projectCards: ProjectCard[] = [
         alt: "대구 AI 빅데이터 해커톤 우수상 상패 사진",
       },
       {
-        src: "/media/hack-reward-startup-stage.jpg",
-        alt: "대구 창업경진 해커톤 발표 현장 사진",
+        src: "/media/hack-reward-sookmyung-stage.jpg",
+        alt: "숙명여대 멋쟁이사자처럼 해커톤 우수상 발표 현장 사진",
       },
     ],
   },
@@ -639,41 +639,27 @@ export const projectDetails: Record<ProjectSlug, ProjectDetail> = {
     ],
     rewardsGallery: {
       slug: "hackathon-rewards",
-      title: "Hackathon Rewards",
+      title: "Rewards",
       summary:
-        "활동 모음 폴더에서 직접 확인한 수상 기록과 발표 현장 사진입니다. 상장, 상패, 팀 수상 순간, 최종 발표 장면까지 결과가 남는 컷만 골라 3D 갤러리 형식으로 묶었습니다.",
+        "대회별 대표 이미지 한 장만 남기고, 어떤 대회에서 어떤 역할로 무엇을 만들었는지와 어떤 상을 받았는지 바로 읽히도록 정리했습니다.",
       media: [
+        {
+          type: "image",
+          src: "/media/hack-reward-busan-ict.jpg",
+          alt: "부산 ICT 이노베이션 해커톤 최우수상 수상 사진",
+          title: "BUSAN ICT",
+          meta: ["2025", "GRAND"],
+          caption:
+            "부산 ICT 이노베이션 해커톤에서 팀장으로 떨이 해산물 판매 플랫폼을 개발해 최우수상을 받았습니다.",
+        },
         {
           type: "image",
           src: "/media/hack-reward-metaverse-special.jpg",
           alt: "메타버스 솔루션 챌린지 특별상 상장",
           title: "SPECIAL",
           meta: ["2022", "KIDKONG"],
-          caption: "메타버스 솔루션 챌린지에서 특별상을 받은 키드콩 프로젝트 상장입니다.",
-        },
-        {
-          type: "image",
-          src: "/media/hack-reward-metaverse-stage.jpg",
-          alt: "메타버스 솔루션 챌린지 발표 현장 스크린",
-          title: "STAGE",
-          meta: ["2022", "SHOW"],
-          caption: "메타버스 솔루션 챌린지 현장에서 프로젝트 화면이 송출되던 발표 장면입니다.",
-        },
-        {
-          type: "image",
-          src: "/media/hack-reward-metaverse-booklet.jpg",
-          alt: "메타버스 솔루션 챌린지 우수 결과집 내 프로젝트 소개 페이지",
-          title: "BOOKLET",
-          meta: ["2022", "GUIDE"],
-          caption: "결과집에 수록된 프로젝트 소개 페이지로, 팀 정보와 게임 화면이 함께 정리된 기록입니다.",
-        },
-        {
-          type: "image",
-          src: "/media/hack-reward-metaverse-demo.png",
-          alt: "메타버스 솔루션 챌린지 제출용 서비스 스크린샷",
-          title: "DEMO",
-          meta: ["2022", "BUILD"],
-          caption: "대회 제출 파일에 포함된 실제 서비스 화면으로, 결과물 자체가 남아 있는 컷입니다.",
+          caption:
+            '메타버스 솔루션 챌린지에서 팀장으로 청소년 상담 솔루션 "키드콩"을 개발해 특별상을 받았습니다.',
         },
         {
           type: "image",
@@ -681,39 +667,35 @@ export const projectDetails: Record<ProjectSlug, ProjectDetail> = {
           alt: "대구 AI 빅데이터 해커톤 우수상 상패",
           title: "AI.BB",
           meta: ["2023", "DGTP"],
-          caption: "대구 AI·빅데이터 해커톤에서 대구테크노파크 원장상 우수상을 받은 현장 사진입니다.",
+          caption:
+            '대구 AI·빅데이터 해커톤에서 팀장으로 UE5 Metahuman 기반 AI 홍보대사 서비스 "메타 대구"를 개발해 테크노파크상을 받았습니다.',
         },
         {
           type: "image",
-          src: "/media/hack-reward-daegu-badge.jpg",
-          alt: "대구 AI 빅데이터 해커톤 참가 현장 명찰 사진",
-          title: "ACCESS",
-          meta: ["2023", "ABB"],
-          caption: "대구 AI·빅데이터 해커톤 현장에서 촬영한 참가 배지 사진으로, 행사 참여 기록을 보여주는 컷입니다.",
-        },
-        {
-          type: "image",
-          src: "/media/hack-reward-sk-plaque.jpg",
-          alt: "SK 알파코 게임잼 우수상 상패 클로즈업",
+          src: "/media/hack-reward-sk-team.jpg",
+          alt: "SK 알파코 AppJam 우수상 수상 팀 사진",
           title: "APPJAM",
           meta: ["2024", "SK"],
-          caption: "SK 알파코 게임잼 우수상을 받은 상패를 대표 컷으로 사용한 이미지입니다.",
+          caption:
+            'SK 알파코 게임잼에서 팀원으로 흰수염고래를 주제로 한 게임 "아고뤠"를 개발해 우수상을 받았습니다.',
         },
         {
           type: "image",
-          src: "/media/hack-reward-sk-group.jpg",
-          alt: "SK 알파코 게임잼 우수상 수상 팀 사진",
-          title: "GROUP",
-          meta: ["2024", "APPJAM"],
-          caption: "SK 알파코 게임잼 수상 직후 남긴 팀 단체 사진으로, 결과와 팀 구성을 함께 확인할 수 있습니다.",
+          src: "/media/hack-reward-daegu-gif-team.jpg",
+          alt: "대구 GIF 해커톤 2등 수상 팀 사진",
+          title: "DAEGU GIF",
+          meta: ["2024", "2ND"],
+          caption:
+            '대구 GIF 해커톤에서 팀원으로 생명안전 아이디어 "SafeAI"를 발표해 2등을 받았습니다.',
         },
         {
           type: "image",
-          src: "/media/hack-reward-startup-stage.jpg",
-          alt: "대구 창업경진 해커톤 발표 현장",
-          title: "PITCH",
-          meta: ["2024", "PRETICON"],
-          caption: "대구 창업경진 해커톤에서 프리티콘을 발표하던 최종 피치 현장입니다.",
+          src: "/media/hack-reward-sookmyung-stage.jpg",
+          alt: "숙명여대 멋쟁이사자처럼 해커톤 우수상 발표 현장",
+          title: "LIKELION",
+          meta: ["2023", "SMWU"],
+          caption:
+            "숙명여대 멋쟁이사자처럼 해커톤에서 팀원으로 뇌파 기반 게임 과몰입 예방 서비스를 개발해 우수상을 받았습니다.",
         },
       ],
     },
@@ -770,7 +752,7 @@ export const awards = [
   },
   {
     badge: "우수상",
-    title: "숙명여대 아이디어해커톤",
+    title: "숙명여대 멋쟁이사자처럼 해커톤",
     description: "뇌파 측정을 통한 게임 과몰입 예방 서비스 개발.",
   },
   {
@@ -804,7 +786,7 @@ export const awards = [
     description: "XR 스타트업 WonStudio 사업계획서 발표.",
   },
   {
-    badge: "3등",
+    badge: "2등",
     title: "대구 GIF 해커톤",
     description: "생명안전 아이디어 SafeAI 발표.",
   },

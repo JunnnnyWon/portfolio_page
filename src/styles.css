@@ -112,7 +112,9 @@ a {
 
 .floating-nav__links {
   display: flex;
-  gap: 0.35rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.2rem;
   overflow-x: auto;
   padding: 0.52rem 0.56rem;
   scrollbar-width: none;
@@ -123,10 +125,11 @@ a {
 }
 
 .floating-nav__links a {
-  flex: 0 0 auto;
+  flex: 1 1 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-width: 0;
   min-height: 2rem;
   padding: 0.46rem 0.76rem;
   border-radius: 999px;
@@ -134,6 +137,7 @@ a {
   font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: -0.03em;
+  white-space: nowrap;
   transition:
     background-color 220ms var(--ease-out),
     color 220ms var(--ease-out),
@@ -2982,162 +2986,65 @@ a {
   gap: 0.6rem;
 }
 
-.hyper-gallery {
+.rewards-gallery {
+  display: grid;
+  gap: 0.92rem;
+}
+
+.rewards-gallery__intro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding-inline: 0.08rem;
+}
+
+.rewards-gallery__intro span {
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--detail-accent) 56%, white);
+}
+
+.rewards-gallery__intro small {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: rgba(220, 227, 255, 0.56);
+}
+
+.rewards-gallery__grid {
+  display: grid;
+  gap: 0.92rem;
+}
+
+.rewards-card {
   position: relative;
   display: grid;
-  gap: 0.8rem;
-  --hyper-gallery-height: min(38rem, 84svh);
-  --hyper-card-width: min(78vw, 19rem);
-  --hyper-lane-width: min(84vw, calc(var(--hyper-card-width) + 1.2rem));
-  --hyper-guard-width: max(0px, calc((100% - var(--hyper-lane-width)) / 2));
-}
-
-.hyper-gallery__viewport {
-  position: relative;
-  height: var(--hyper-gallery-height);
-  overflow: hidden;
-  touch-action: none;
-  border-radius: 1.9rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 0.9rem;
+  padding: 0.84rem;
+  border-radius: 1.6rem;
+  border: 1px solid color-mix(in srgb, var(--detail-accent) 12%, rgba(255, 255, 255, 0.08));
   background:
-    radial-gradient(circle at top center, rgba(137, 152, 255, 0.18), transparent 34%),
-    radial-gradient(circle at bottom left, rgba(166, 205, 255, 0.12), transparent 36%),
-    linear-gradient(180deg, rgba(13, 16, 30, 0.98), rgba(4, 6, 16, 0.98));
+    linear-gradient(180deg, rgba(18, 22, 48, 0.92), rgba(7, 10, 24, 0.98)),
+    rgba(8, 11, 26, 0.94);
   box-shadow:
-    0 24px 54px rgba(1, 5, 24, 0.34),
+    0 20px 42px rgba(1, 5, 24, 0.26),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  overflow: hidden;
 }
 
-.hyper-gallery__scanlines,
-.hyper-gallery__vignette,
-.hyper-gallery__noise {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.hyper-gallery__scanlines {
-  z-index: 1;
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0) 50%,
-      rgba(255, 255, 255, 0.06) 50%,
-      rgba(255, 255, 255, 0.06) 100%
-    );
-  background-size: 100% 4px;
-  opacity: 0.1;
-}
-
-.hyper-gallery__vignette {
-  z-index: 1;
-  background: radial-gradient(circle, transparent 48%, rgba(0, 0, 0, 0.64) 100%);
-}
-
-.hyper-gallery__noise {
-  z-index: 1;
-  opacity: 0.05;
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.42) 0 0.5px, transparent 0.7px),
-    radial-gradient(circle at 80% 40%, rgba(255, 255, 255, 0.32) 0 0.5px, transparent 0.7px),
-    radial-gradient(circle at 60% 78%, rgba(255, 255, 255, 0.28) 0 0.5px, transparent 0.7px);
-  background-size: 18px 18px, 24px 24px, 20px 20px;
-}
-
-.hyper-gallery__edge-guard {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  z-index: 3;
-  width: var(--hyper-guard-width);
-  pointer-events: auto;
-  touch-action: pan-y;
-}
-
-.hyper-gallery__edge-guard--left {
-  left: 0;
-}
-
-.hyper-gallery__edge-guard--right {
-  right: 0;
-}
-
-.hyper-gallery__scroll {
-  position: relative;
-  z-index: 2;
-  height: 100%;
-  width: 100%;
-  overflow-y: hidden;
-  overflow-x: hidden;
-  scrollbar-width: none;
-  overscroll-behavior: none;
-  touch-action: none;
-  pointer-events: none;
-}
-
-.hyper-gallery__scroll::-webkit-scrollbar {
-  display: none;
-}
-
-.hyper-gallery__track {
-  position: relative;
-}
-
-.hyper-gallery__sticky {
-  position: sticky;
-  top: 0;
-  height: var(--hyper-gallery-height);
-}
-
-.hyper-gallery__world {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  perspective: 1400px;
-  contain: layout paint style;
-}
-
-.detail-page--locked .hyper-gallery {
-  --hyper-gallery-height: min(32rem, calc(100svh - 13rem));
-}
-
-.hyper-card {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: var(--hyper-card-width);
-  padding: 0.82rem;
-  border-radius: 1.55rem;
-  border: 1px solid rgba(188, 209, 255, 0.16);
-  background:
-    linear-gradient(180deg, rgba(18, 23, 46, 0.74), rgba(7, 10, 25, 0.92)),
-    rgba(10, 13, 26, 0.76);
-  box-shadow:
-    0 20px 44px rgba(0, 0, 0, 0.34),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-  will-change: transform, opacity;
-  transition:
-    box-shadow 220ms var(--ease-out),
-    border-color 220ms var(--ease-out);
-  contain: layout paint;
-  pointer-events: none;
-}
-
-.hyper-card::before {
+.rewards-card::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
   padding: 1px;
   background: linear-gradient(
-    135deg,
-    rgba(171, 185, 255, 0.52),
-    rgba(130, 165, 255, 0.22),
-    rgba(255, 255, 255, 0.08)
+    145deg,
+    color-mix(in srgb, var(--detail-accent) 22%, rgba(255, 255, 255, 0.14)),
+    rgba(255, 255, 255, 0.05)
   );
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
@@ -3147,74 +3054,98 @@ a {
   pointer-events: none;
 }
 
-.hyper-card.is-active {
+.rewards-card--featured {
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--detail-accent) 14%, transparent), transparent 38%),
+    linear-gradient(180deg, rgba(21, 26, 54, 0.96), rgba(7, 10, 24, 0.98)),
+    rgba(8, 11, 26, 0.95);
   box-shadow:
-    0 28px 62px rgba(0, 0, 0, 0.48),
-    0 0 28px rgba(126, 156, 255, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    0 24px 50px rgba(1, 5, 24, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
-.hyper-card__chrome,
-.hyper-card__copy-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.8rem;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.58rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(220, 227, 255, 0.68);
-}
-
-.hyper-card__frame {
-  margin-top: 0.65rem;
-  overflow: hidden;
-  border-radius: 1rem;
+.rewards-card__frame {
+  position: relative;
   display: grid;
   place-items: center;
-  padding: 0.12rem;
+  min-height: clamp(18rem, 56vw, 28rem);
+  overflow: hidden;
+  border-radius: 1.18rem;
+  padding: 0.44rem;
   background:
-    radial-gradient(circle at top, rgba(137, 152, 255, 0.1), transparent 42%),
-    rgba(255, 255, 255, 0.05);
-  aspect-ratio: 0.9 / 1.08;
-  pointer-events: auto;
-  touch-action: pan-y;
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+    rgba(255, 255, 255, 0.03);
 }
 
-.hyper-card__frame img,
-.hyper-card__frame video {
+.rewards-card:not(.rewards-card--featured) .rewards-card__frame {
+  min-height: clamp(15rem, 52vw, 21rem);
+}
+
+.rewards-card__frame img,
+.rewards-card__frame video {
   display: block;
   width: 100%;
   height: 100%;
+  border-radius: 0.92rem;
+  background: rgba(0, 0, 0, 0.18);
   object-fit: contain;
   object-position: center;
-  backface-visibility: hidden;
-  transform: translateZ(0);
 }
 
-.hyper-card__copy {
+.rewards-card__body {
+  position: relative;
+  z-index: 1;
   display: grid;
   gap: 0.5rem;
-  margin-top: 0.75rem;
 }
 
-.hyper-card__copy h3 {
+.rewards-card__eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.42rem;
+}
+
+.rewards-card__index,
+.rewards-card__chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.64rem;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.rewards-card__index {
+  padding: 0.34rem 0.62rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(247, 249, 255, 0.92);
+}
+
+.rewards-card__chip {
+  padding: 0.34rem 0.58rem;
+  border: 1px solid color-mix(in srgb, var(--detail-accent) 20%, rgba(255, 255, 255, 0.08));
+  background: color-mix(in srgb, var(--detail-accent-soft) 80%, rgba(255, 255, 255, 0.03));
+  color: rgba(232, 239, 255, 0.8);
+}
+
+.rewards-card__body h3 {
   margin: 0;
   font-family: "Syncopate", sans-serif;
-  font-size: clamp(1.18rem, 5.8vw, 1.5rem);
+  font-size: clamp(1.1rem, 6vw, 1.44rem);
   line-height: 1;
   letter-spacing: -0.03em;
   color: rgba(247, 249, 255, 0.96);
   text-transform: uppercase;
 }
 
-.hyper-card__copy p {
+.rewards-card__body p {
   margin: 0;
-  font-size: 0.76rem;
-  line-height: 1.58;
-  color: rgba(224, 231, 255, 0.78);
+  font-size: 0.78rem;
+  line-height: 1.62;
+  color: rgba(224, 231, 255, 0.76);
 }
 
 .detail-case__gallery {
@@ -3381,6 +3312,20 @@ a {
 }
 
 @media (min-width: 46rem) {
+  .rewards-gallery__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rewards-card--featured {
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1.08fr) minmax(16rem, 0.92fr);
+    align-items: stretch;
+  }
+
+  .rewards-card--featured .rewards-card__body {
+    align-content: center;
+  }
+
   .detail-case {
     padding: 1.1rem;
   }
@@ -3392,9 +3337,9 @@ a {
 }
 
 @media (max-width: 28rem) {
-  .hyper-gallery {
-    --hyper-card-width: min(80vw, 18rem);
-    --hyper-lane-width: min(86vw, calc(var(--hyper-card-width) + 1rem));
+  .rewards-gallery__intro {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .detail-case__gallery--hackathon {
@@ -3402,13 +3347,14 @@ a {
     gap: 0.72rem;
   }
 
-  .hyper-gallery__viewport,
-  .hyper-gallery__sticky {
-    height: min(36rem, 82svh);
+  .rewards-card {
+    padding: 0.72rem;
+    border-radius: 1.38rem;
   }
 
-  .hyper-card {
-    padding: 0.72rem;
+  .rewards-card__frame {
+    min-height: 14rem;
+    padding: 0.32rem;
   }
 
   .detail-nav {
@@ -3451,18 +3397,6 @@ a {
 
   .detail-media__meta {
     gap: 0.5rem;
-  }
-}
-
-@keyframes hyper-noise-drift {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  50% {
-    transform: translate3d(-2%, 1%, 0);
-  }
-  100% {
-    transform: translate3d(2%, -1%, 0);
   }
 }
 

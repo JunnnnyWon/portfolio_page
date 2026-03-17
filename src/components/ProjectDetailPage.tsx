@@ -37,228 +37,60 @@ type MediaGalleryProps = {
 };
 
 function HackathonRewardsGallery({ gallery }: MediaGalleryProps) {
-  const viewportRef = useRef<HTMLDivElement | null>(null);
-  const scrollRef = useRef<HTMLDivElement | null>(null);
-  const frameRef = useRef<number | null>(null);
-  const [progress, setProgress] = useState(0);
-  const maxIndex = Math.max(0, gallery.media.length - 1);
-  const trackHeight = Math.max(320, gallery.media.length * 360);
-  const activeIndex = Math.max(0, Math.min(maxIndex, Math.round(progress)));
-  const visibleRange = 2.6;
-
-  useEffect(() => {
-    const scroller = scrollRef.current;
-
-    if (!scroller) {
-      return;
-    }
-
-    const update = () => {
-      const top = scroller.scrollTop;
-      const maxScroll = Math.max(1, scroller.scrollHeight - scroller.clientHeight);
-      const nextProgress = (top / maxScroll) * maxIndex;
-      setProgress((current) =>
-        Math.abs(current - nextProgress) < 0.01 ? current : nextProgress,
-      );
-      frameRef.current = null;
-    };
-
-    const handleScroll = () => {
-      if (frameRef.current !== null) {
-        return;
-      }
-
-      frameRef.current = window.requestAnimationFrame(update);
-    };
-
-    update();
-    scroller.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      scroller.removeEventListener("scroll", handleScroll);
-      if (frameRef.current !== null) {
-        window.cancelAnimationFrame(frameRef.current);
-        frameRef.current = null;
-      }
-    };
-  }, [maxIndex]);
-
-  useEffect(() => {
-    const viewport = viewportRef.current;
-    const scroller = scrollRef.current;
-
-    if (
-      !(viewport instanceof HTMLDivElement) ||
-      !(scroller instanceof HTMLDivElement)
-    ) {
-      return;
-    }
-
-    let touchMode: "gallery" | "locked" | null = null;
-    let lastTouchY = 0;
-
-    const isActiveFramePoint = (clientX: number, clientY: number) => {
-      const activeFrame = viewport.querySelector(
-        ".hyper-card.is-active .hyper-card__frame",
-      );
-
-      if (!(activeFrame instanceof HTMLElement)) {
-        return false;
-      }
-
-      const rect = activeFrame.getBoundingClientRect();
-      return (
-        clientX >= rect.left &&
-        clientX <= rect.right &&
-        clientY >= rect.top &&
-        clientY <= rect.bottom
-      );
-    };
-
-    const routeDelta = (deltaY: number, mode: "gallery" | "locked") => {
-      if (mode === "gallery") {
-        scroller.scrollTop += deltaY;
-      }
-    };
-
-    const handleWheel = (event: WheelEvent) => {
-      event.preventDefault();
-      routeDelta(
-        event.deltaY,
-        isActiveFramePoint(event.clientX, event.clientY) ? "gallery" : "locked",
-      );
-    };
-
-    const handleTouchStart = (event: TouchEvent) => {
-      const touch = event.touches[0];
-      touchMode =
-        touch && isActiveFramePoint(touch.clientX, touch.clientY)
-          ? "gallery"
-          : "locked";
-      lastTouchY = touch?.clientY ?? 0;
-    };
-
-    const handleTouchMove = (event: TouchEvent) => {
-      if (!touchMode) {
-        return;
-      }
-
-      const nextTouchY = event.touches[0]?.clientY ?? lastTouchY;
-      const deltaY = lastTouchY - nextTouchY;
-      lastTouchY = nextTouchY;
-
-      event.preventDefault();
-      routeDelta(deltaY, touchMode);
-    };
-
-    const resetRedirect = () => {
-      touchMode = null;
-      lastTouchY = 0;
-    };
-
-    viewport.addEventListener("wheel", handleWheel, { passive: false, capture: true });
-    viewport.addEventListener("touchstart", handleTouchStart, {
-      passive: false,
-      capture: true,
-    });
-    viewport.addEventListener("touchmove", handleTouchMove, {
-      passive: false,
-      capture: true,
-    });
-    viewport.addEventListener("touchend", resetRedirect, { capture: true });
-    viewport.addEventListener("touchcancel", resetRedirect, { capture: true });
-
-    return () => {
-      viewport.removeEventListener("wheel", handleWheel, true);
-      viewport.removeEventListener("touchstart", handleTouchStart, true);
-      viewport.removeEventListener("touchmove", handleTouchMove, true);
-      viewport.removeEventListener("touchend", resetRedirect, true);
-      viewport.removeEventListener("touchcancel", resetRedirect, true);
-    };
-  }, []);
-
   return (
-    <div className="hyper-gallery">
-      <div ref={viewportRef} className="hyper-gallery__viewport">
-        <div className="hyper-gallery__scanlines" />
-        <div className="hyper-gallery__vignette" />
-        <div className="hyper-gallery__noise" />
-        <div className="hyper-gallery__edge-guard hyper-gallery__edge-guard--left" />
-        <div className="hyper-gallery__edge-guard hyper-gallery__edge-guard--right" />
+    <div className="rewards-gallery">
+      <div className="rewards-gallery__intro">
+        <span>{gallery.headerLabel ?? "Selected Rewards"}</span>
+        <small>{gallery.hintLabel ?? `${gallery.media.length} highlights`}</small>
+      </div>
 
-        <div ref={scrollRef} className="hyper-gallery__scroll">
-          <div
-            className="hyper-gallery__track"
-            style={{ height: `${trackHeight}px` }}
-          >
-            <div className="hyper-gallery__sticky">
-              <div className="hyper-gallery__world">
-                {gallery.media.map((item, index) => {
-                  const offset = index - progress;
-                  const distance = Math.abs(offset);
+      <div className="rewards-gallery__grid">
+        {gallery.media.map((item, index) => {
+          const cardTitle =
+            item.title ?? `Reward ${String(index + 1).padStart(2, "0")}`;
 
-                  if (distance > visibleRange) {
-                    return null;
-                  }
-
-                  const depth = 220 - distance * 260;
-                  const translateY = offset * 58;
-                  const rotateX = offset * -7;
-                  const rotateY = offset * -14;
-                  const scale = Math.max(0.68, 1 - distance * 0.16);
-                  const opacity = Math.max(0.16, 1 - distance * 0.26);
-                  const cardTitle = item.title ?? `ITEM ${String(index + 1).padStart(2, "0")}`;
-                  const cardMeta = item.meta ?? ["HACKATHON", `ID-${String(index + 1).padStart(3, "0")}`];
-
-                  return (
-                    <article
-                      key={`${gallery.slug}-${item.src}`}
-                      className={`hyper-card${index === activeIndex ? " is-active" : ""}`}
-                      style={
-                        {
-                          transform: `translate3d(-50%, calc(-50% + ${translateY}px), ${depth}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`,
-                          opacity,
-                          zIndex: 1000 - Math.round(distance * 100),
-                        } as CSSProperties
-                      }
-                    >
-                      <div className="hyper-card__chrome">
-                        <span>{cardMeta[0]}</span>
-                        <span>{cardMeta[1]}</span>
-                      </div>
-                      <div className="hyper-card__frame">
-                        {item.type === "image" ? (
-                          <img
-                            src={item.src}
-                            alt={item.alt}
-                            loading="lazy"
-                            decoding="async"
-                          />
-                        ) : (
-                          <video
-                            src={item.src}
-                            poster={item.poster}
-                            controls
-                            preload="metadata"
-                            playsInline
-                          />
-                        )}
-                      </div>
-                      <div className="hyper-card__copy">
-                        <div className="hyper-card__copy-top">
-                          <span>{cardMeta[0]}</span>
-                          <span>{cardMeta[1]}</span>
-                        </div>
-                        <h3>{cardTitle}</h3>
-                        <p>{item.caption ?? item.alt}</p>
-                      </div>
-                    </article>
-                  );
-                })}
+          return (
+            <article
+              key={`${gallery.slug}-${item.src}`}
+              className={`rewards-card${index === 0 ? " rewards-card--featured" : ""}`}
+            >
+              <div className="rewards-card__frame">
+                {item.type === "image" ? (
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <video
+                    src={item.src}
+                    poster={item.poster}
+                    controls
+                    preload="metadata"
+                    playsInline
+                  />
+                )}
               </div>
-            </div>
-          </div>
-        </div>
+
+              <div className="rewards-card__body">
+                <div className="rewards-card__eyebrow">
+                  <span className="rewards-card__index">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  {item.meta?.map((entry) => (
+                    <span key={`${item.src}-${entry}`} className="rewards-card__chip">
+                      {entry}
+                    </span>
+                  ))}
+                </div>
+
+                <h3>{cardTitle}</h3>
+                <p>{item.caption ?? item.alt}</p>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </div>
   );
@@ -512,7 +344,7 @@ export function ProjectDetailPage({
   const reveal = reducedMotion ? undefined : "hidden";
   const isGalleryOnlyProject =
     project.slug === "hackathon" && Boolean(project.rewardsGallery);
-  const pageTitle = isGalleryOnlyProject ? "Project" : "Projects";
+  const pageTitle = isGalleryOnlyProject ? "Rewards" : "Projects";
   const pageRef = useRef<HTMLDivElement | null>(null);
   const hasCaseStudies = (project.caseStudies?.length ?? 0) > 0;
 
@@ -552,7 +384,7 @@ export function ProjectDetailPage({
           <motion.h1 variants={fadeUp(20)}>{pageTitle}</motion.h1>
           {isGalleryOnlyProject && project.rewardsGallery ? (
             <motion.div className="detail-title__gallery-meta" variants={fadeUp(22)}>
-              <span className="detail-title__gallery-kicker">Reward Gallery</span>
+              <span className="detail-title__gallery-kicker">Selected Rewards</span>
             </motion.div>
           ) : null}
         </motion.section>
@@ -680,8 +512,8 @@ export function ProjectDetailPage({
                   gallery={{
                     slug: project.rewardsGallery.slug,
                     media: project.rewardsGallery.media,
-                    headerLabel: "Reward Gallery",
-                    hintLabel: "Swipe to browse",
+                    headerLabel: "Selected Rewards",
+                    hintLabel: "Hackathon highlights",
                   }}
                 />
               </motion.section>
