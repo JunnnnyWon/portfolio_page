@@ -1022,8 +1022,9 @@ a {
 }
 
 .profile-role__body {
-  display: grid;
-  gap: 0.25rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
 }
 
 .profile-role__body small {
@@ -1057,11 +1058,9 @@ a {
 }
 
 .profile-card__tech-grid {
-  display: grid;
-  grid-template-columns: repeat(3, max-content);
-  justify-content: space-between;
-  column-gap: 1.7rem;
-  row-gap: 0.92rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
   align-items: start;
 }
 
