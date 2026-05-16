@@ -56,20 +56,12 @@ export function HeroSection({ progress: _progress, reducedMotion }: HeroSectionP
             src="/assets/hero/figma-stairs.png"
             alt=""
           />
-          <img
-            className="hero-stage__orb"
-            src="/assets/hero/orb.png"
-            alt=""
-          />
           <div className="hero-stage__wordmark">
+            <img className="hero-stage__orb" src="/assets/hero/orb.png" alt="" />
             <span className="hero-stage__wordmark-port">PORT</span>
             <span className="hero-stage__wordmark-folio">FOLIO</span>
+            <img className="hero-stage__cursor" src="/assets/hero/cursor.png" alt="" />
           </div>
-          <img
-            className="hero-stage__cursor"
-            src="/assets/hero/cursor.png"
-            alt=""
-          />
         </motion.div>
 
         <motion.div
