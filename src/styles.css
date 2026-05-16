@@ -336,7 +336,7 @@ a {
   left: -0.19em;
   width: 0.81em;
   z-index: 2;
-  filter: drop-shadow(0 0.8rem 1.6rem rgba(24, 18, 50, 0.24));
+  filter: drop-shadow(0 0.12em 0.25em rgba(24, 18, 50, 0.24));
 }
 
 .hero-stage__wordmark {
@@ -349,6 +349,7 @@ a {
   transform-origin: center center;
   align-items: center;
   justify-items: center;
+  font-size: clamp(5.9rem, 14.9vw, 6.7rem);
 }
 
 .hero-stage__wordmark span {
@@ -377,7 +378,7 @@ a {
   right: -0.29em;
   width: 0.69em;
   z-index: 3;
-  filter: drop-shadow(0 0.75rem 1.55rem rgba(20, 15, 48, 0.3));
+  filter: drop-shadow(0 0.11em 0.23em rgba(20, 15, 48, 0.3));
 }
 
 .hero-stage__copy {
@@ -4203,6 +4204,7 @@ a {
 
   .hero-stage__wordmark {
     top: 24rem;
+    font-size: clamp(9rem, 16vw, 14rem);
   }
 
   .hero-stage__wordmark-port {
@@ -4546,6 +4548,7 @@ a {
 
   .hero-stage__wordmark {
     top: 26rem;
+    font-size: clamp(10rem, 14vw, 15rem);
   }
 
   .hero-stage__wordmark-port {
@@ -4729,6 +4732,10 @@ a {
 
   .detail-shell {
     max-width: 62rem;
+  }
+
+  .hero-stage__wordmark {
+    font-size: clamp(11rem, 13vw, 16rem);
   }
 
   .hero-stage__wordmark-port {
