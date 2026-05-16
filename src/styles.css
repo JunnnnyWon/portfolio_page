@@ -332,11 +332,11 @@ a {
 }
 
 .hero-stage__orb {
-  top: -1.8rem;
-  left: -1.2rem;
-  width: 5.1rem;
+  top: -0.28em;
+  left: -0.19em;
+  width: 0.81em;
   z-index: 2;
-  filter: drop-shadow(0 0.8rem 1.6rem rgba(24, 18, 50, 0.24));
+  filter: drop-shadow(0 0.12em 0.25em rgba(24, 18, 50, 0.24));
 }
 
 .hero-stage__wordmark {
@@ -349,6 +349,7 @@ a {
   transform-origin: center center;
   align-items: center;
   justify-items: center;
+  font-size: clamp(5.9rem, 14.9vw, 6.7rem);
 }
 
 .hero-stage__wordmark span {
@@ -373,11 +374,11 @@ a {
 }
 
 .hero-stage__cursor {
-  bottom: -1.2rem;
-  right: -2rem;
-  width: 4.7rem;
+  bottom: -0.18em;
+  right: -0.29em;
+  width: 0.69em;
   z-index: 3;
-  filter: drop-shadow(0 0.75rem 1.55rem rgba(20, 15, 48, 0.3));
+  filter: drop-shadow(0 0.11em 0.23em rgba(20, 15, 48, 0.3));
 }
 
 .hero-stage__copy {
@@ -485,17 +486,9 @@ a {
     width: 39.8rem;
   }
 
-  .hero-stage__orb {
-    width: 4.3rem;
-  }
-
   .hero-stage__wordmark {
     top: 21.75rem;
     left: 50%;
-  }
-
-  .hero-stage__cursor {
-    width: 4rem;
   }
 
   .hero-stage__copy {
@@ -4156,7 +4149,7 @@ a {
 
   /* Hero section - scale up */
   .hero-stage {
-    min-height: max(100svh, 52rem);
+    min-height: max(100svh, 60rem);
     overflow: hidden;
   }
 
@@ -4209,30 +4202,23 @@ a {
     width: 58rem;
   }
 
-  .hero-stage__orb {
-    width: 6.5rem;
-  }
-
   .hero-stage__wordmark {
     top: 24rem;
+    font-size: clamp(9rem, 16vw, 14rem);
   }
 
   .hero-stage__wordmark-port {
-    font-size: clamp(7rem, 12vw, 10rem);
+    font-size: clamp(9rem, 16vw, 14rem);
   }
 
   .hero-stage__wordmark-folio {
-    font-size: clamp(7.5rem, 13vw, 11rem);
-  }
-
-  .hero-stage__cursor {
-    width: 5.8rem;
+    font-size: clamp(10rem, 17vw, 15rem);
   }
 
   .hero-stage__copy {
     left: 3rem;
     right: 3rem;
-    bottom: 2.5rem;
+    bottom: 1.5rem;
     max-width: 28rem;
   }
 
@@ -4371,12 +4357,12 @@ a {
 
   .projects-card-stack {
     gap: 0;
-    max-width: 38rem;
+    max-width: 46rem;
     margin-inline: auto;
   }
 
   .projects-card-stack > li:not(:first-child) {
-    margin-top: -2.5rem;
+    margin-top: -4.5rem;
   }
 
   .projects-card-stack > li:nth-child(odd) .projects-card {
@@ -4388,8 +4374,8 @@ a {
   }
 
   .projects-card {
-    min-height: 26rem;
-    padding: 1.8rem 1.7rem 1.8rem;
+    min-height: 32rem;
+    padding: 2rem 2rem 2rem;
     border-radius: 1.85rem;
   }
 
@@ -4560,24 +4546,17 @@ a {
     width: 66rem;
   }
 
-  .hero-stage__orb {
-    width: 7.5rem;
-  }
-
   .hero-stage__wordmark {
     top: 26rem;
+    font-size: clamp(10rem, 14vw, 15rem);
   }
 
   .hero-stage__wordmark-port {
-    font-size: clamp(8rem, 11vw, 12rem);
+    font-size: clamp(10rem, 14vw, 15rem);
   }
 
   .hero-stage__wordmark-folio {
-    font-size: clamp(8.5rem, 12vw, 13rem);
-  }
-
-  .hero-stage__cursor {
-    width: 6.5rem;
+    font-size: clamp(11rem, 15vw, 16rem);
   }
 
   .hero-stage__copy {
@@ -4656,15 +4635,15 @@ a {
   }
 
   .projects-card-stack {
-    max-width: 44rem;
+    max-width: 50rem;
   }
 
   .projects-card-stack > li:not(:first-child) {
-    margin-top: -3rem;
+    margin-top: -5rem;
   }
 
   .projects-card {
-    min-height: 28rem;
+    min-height: 34rem;
     padding: 2rem 1.9rem 2rem;
   }
 
@@ -4755,12 +4734,16 @@ a {
     max-width: 62rem;
   }
 
+  .hero-stage__wordmark {
+    font-size: clamp(11rem, 13vw, 16rem);
+  }
+
   .hero-stage__wordmark-port {
-    font-size: clamp(9rem, 10vw, 13rem);
+    font-size: clamp(11rem, 13vw, 16rem);
   }
 
   .hero-stage__wordmark-folio {
-    font-size: clamp(9.5rem, 11vw, 14rem);
+    font-size: clamp(12rem, 14vw, 17rem);
   }
 }
 
