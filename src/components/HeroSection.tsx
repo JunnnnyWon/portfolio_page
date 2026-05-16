@@ -79,13 +79,13 @@ export function HeroSection({ progress: _progress, reducedMotion }: HeroSectionP
           animate={animate}
         >
           <motion.p className="hero-stage__intro" variants={fadeUp(18)}>
-            AI와 3D 엔진의 접점에서, 사용자가 직접 체감할 수 있는 콘텐츠를
-            만드는 개발자로 성장해가고자 합니다.
-          </motion.p>
-          <motion.p className="hero-stage__body" variants={fadeUp(18)}>
             안녕하세요! 저는 AI 기술과 3D 엔진을 기반으로 콘텐츠를 개발하는{" "}
             <strong>조원준</strong>입니다. 새로운 기술을 빠르게 익히고, 이를
             실제로 구현 가능한 형태로 정리해내는 과정도 중요하게 생각합니다.
+          </motion.p>
+          <motion.p className="hero-stage__body" variants={fadeUp(18)}>
+            AI와 3D 엔진의 접점에서, 사용자가 직접 체감할 수 있는 콘텐츠를
+            만드는 개발자로 성장해가고자 합니다.
           </motion.p>
           <motion.div className="hero-stage__stars" variants={fadeUp(18)}>
             ✦ ✦ ✦

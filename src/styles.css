@@ -240,7 +240,7 @@ a {
 .hero-stage__stars {
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
   word-break: keep-all;
-  overflow-wrap: normal;
+  overflow-wrap: break-word;
 }
 
 .hero-stage__brand strong {
@@ -385,6 +385,8 @@ a {
   right: 1.85rem;
   bottom: 0.95rem;
   max-width: 20.75rem;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .hero-stage__intro,
@@ -4216,8 +4218,8 @@ a {
   }
 
   .hero-stage__orb {
-    top: 22rem;
-    left: calc(50% - 12rem);
+    top: 19.5rem;
+    left: calc(50% - 14.5rem);
     width: 6.5rem;
   }
 
@@ -4234,15 +4236,15 @@ a {
   }
 
   .hero-stage__cursor {
-    top: 34rem;
-    left: calc(50% + 8rem);
+    top: 38rem;
+    left: calc(50% + 11rem);
     width: 5.8rem;
   }
 
   .hero-stage__copy {
     left: 3rem;
     right: 3rem;
-    bottom: 2rem;
+    bottom: 1.5rem;
     max-width: 28rem;
   }
 
@@ -4555,8 +4557,8 @@ a {
   }
 
   .hero-stage__orb {
-    top: 24rem;
-    left: calc(50% - 14rem);
+    top: 21.5rem;
+    left: calc(50% - 17rem);
     width: 7.5rem;
   }
 
@@ -4573,15 +4575,15 @@ a {
   }
 
   .hero-stage__cursor {
-    top: 37rem;
-    left: calc(50% + 10rem);
+    top: 42rem;
+    left: calc(50% + 13rem);
     width: 6.5rem;
   }
 
   .hero-stage__copy {
     left: 4rem;
     right: 4rem;
-    bottom: 3rem;
+    bottom: 2rem;
     max-width: 32rem;
   }
 
