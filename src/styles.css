@@ -4081,7 +4081,7 @@ a {
   color: rgba(255, 255, 255, 0.5);
 }
 
-@media (min-width: 36rem) and (max-width: 767px) {
+@media (min-width: 36rem) and (max-width: 47.9375rem) {
   .app-stage {
     margin: 1.2rem 0;
     border-radius: 2rem;
@@ -4100,70 +4100,6 @@ a {
   .profile-stage__ellipse--bottom {
     left: -6rem;
     width: 30rem;
-  }
-}
-
-@media (min-width: 48rem) {
-  .projects-stage {
-    width: min(100%, 34rem);
-    margin-inline: auto;
-    justify-items: stretch;
-  }
-
-  .projects-stage__header {
-    justify-items: center;
-    width: 100%;
-    text-align: center;
-  }
-
-  .projects-stage__header-title {
-    position: relative;
-    width: 100%;
-    display: grid;
-    justify-items: center;
-    overflow: visible;
-  }
-
-  .projects-stage__backdrop {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    width: max-content;
-    transform: translateX(-50%);
-    pointer-events: none;
-    white-space: nowrap;
-  }
-
-  .projects-stage__header h2 {
-    max-width: none;
-    margin-inline: auto;
-    margin-top: -0.35rem;
-  }
-
-  .projects-stage__header p {
-    max-width: 26rem;
-    margin-inline: auto;
-  }
-
-  .projects-orbit-shell {
-    width: 100%;
-  }
-
-  .projects-orbit {
-    height: 23rem;
-  }
-
-  .project-orbit-card {
-    width: 16.2rem;
-  }
-
-  .projects-wall-shell {
-    width: 100%;
-  }
-
-  .projects-wall {
-    width: 100%;
-    grid-template-rows: repeat(6, minmax(0, 4rem));
   }
 }
 
@@ -4227,6 +4163,7 @@ a {
   /* Hero section - scale up */
   .hero-stage {
     min-height: 100svh;
+    overflow: hidden;
   }
 
   .hero-stage__brand {
@@ -4370,10 +4307,12 @@ a {
   .projects-stage {
     width: min(100%, 42rem);
     margin-inline: auto;
+    justify-items: stretch;
   }
 
   .projects-stage__header {
     justify-items: center;
+    width: 100%;
     text-align: center;
   }
 
