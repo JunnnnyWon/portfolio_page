@@ -32,10 +32,10 @@ export function ProjectsSection({
           viewport={{ once: true, amount: 0.35 }}
         >
           <motion.div
-            className="projects-stage__header-title"
+            className="career-stage__heading"
             variants={fadeUp(20)}
           >
-            <span className="projects-stage__backdrop">PROJECTS</span>
+            <span>PROJECTS</span>
             <h2>주요 작업물</h2>
           </motion.div>
           <motion.span
@@ -78,56 +78,47 @@ export function ProjectsSection({
                   transition={quickTransition}
                   aria-label={`${card.title} 상세 페이지로 이동`}
                 >
-                  <span className="projects-card__bar" aria-hidden="true" />
-                  <div className="projects-card__top">
-                    <div className="projects-card__heading">
-                      <span className="projects-card__index">{card.index}</span>
-                      <strong className="projects-card__meta">
-                        {card.previewLabel}
-                      </strong>
+                  <div className="projects-card__typography" aria-hidden="true">
+                      <span className="projects-card__huge-index">{card.index}</span>
+                      <div className="projects-card__marquee">
+                        <div className="projects-card__marquee-track">
+                          <span>{card.previewLabel} ✦ </span>
+                          <span>{card.previewLabel} ✦ </span>
+                          <span>{card.previewLabel} ✦ </span>
+                          <span>{card.previewLabel} ✦ </span>
+                          <span>{card.previewLabel} ✦ </span>
+                          <span>{card.previewLabel} ✦ </span>
+                        </div>
+                          <div className="projects-card__marquee-track projects-card__marquee-track--reverse">
+                            <span>{card.previewLabel} ✦ </span>
+                            <span>{card.previewLabel} ✦ </span>
+                            <span>{card.previewLabel} ✦ </span>
+                            <span>{card.previewLabel} ✦ </span>
+                            <span>{card.previewLabel} ✦ </span>
+                            <span>{card.previewLabel} ✦ </span>
+                          </div>
+                      </div>
                     </div>
-
-                    <motion.span
-                      className="projects-card__spark"
-                      aria-hidden="true"
-                      animate={
-                        reducedMotion
-                          ? undefined
-                          : {
-                              rotate: [0, 18, 0, -18, 0],
-                              scale: [1, 1.08, 1, 1.08, 1],
-                            }
-                      }
-                      transition={{
-                        duration: 4.8 + index * 0.35,
-                        ease: "easeInOut",
-                        repeat: Number.POSITIVE_INFINITY,
-                        delay: index * 0.2,
-                      }}
-                    />
-                  </div>
-
-                  <div className="projects-card__body">
-                    <div className="projects-card__visual" aria-hidden="true">
-                      {card.previewMedia.map((preview, previewIndex) => (
-                        <figure
-                          key={preview.src}
-                          className={`projects-card__preview projects-card__preview--${previewSlots[previewIndex]}`}
-                        >
-                          <img src={preview.src} alt="" loading="lazy" />
-                        </figure>
-                      ))}
+                    <div className="projects-card__top">
+                      <div className="projects-card__heading">
+                        <span className="projects-card__index">[PRJ_{card.index}]</span>
+                        <strong className="projects-card__meta">
+                          {card.previewLabel}
+                        </strong>
+                      </div>
                     </div>
-                    <p>{card.summary}</p>
-                  </div>
-
-                  <div className="projects-card__footer">
-                    <span className="projects-card__note">
-                      <span>자세히 보기</span>
-                      <span className="projects-card__arrow" aria-hidden="true" />
-                    </span>
-                  </div>
-                </motion.button>
+                    <div className="projects-card__line" aria-hidden="true"></div>
+                    <div className="projects-card__body">
+                      <p>{card.summary}</p>
+                    </div>
+                    <div className="projects-card__line" aria-hidden="true"></div>
+                    <div className="projects-card__footer">
+                      <span className="projects-card__note">
+                        <span>EXPLORE PROJECT</span>
+                        <span className="projects-card__arrow" aria-hidden="true" />
+                      </span>
+                    </div>
+                  </motion.button>
               </li>
             ))}
           </motion.ol>

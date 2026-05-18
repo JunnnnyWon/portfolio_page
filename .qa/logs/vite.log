@@ -1,0 +1,18 @@
+
+> figma-convert@0.0.0 dev
+> vite --host 127.0.0.1 --port 5173
+
+
+  VITE v7.3.1  ready in 144 ms
+
+  ➜  Local:   http://127.0.0.1:5173/
+PM 4:19:50 [vite] (client) hmr update /src/desktop.css
+PM 4:20:09 [vite] (client) hmr update /src/desktop.css
+PM 4:20:31 [vite] (client) hmr update /src/desktop.css
+PM 4:21:07 [vite] (client) hmr update /src/desktop.css
+PM 4:22:14 [vite] (client) hmr update /src/desktop.css
+PM 4:22:28 [vite] (client) hmr update /src/desktop.css
+PM 4:22:43 [vite] (client) hmr update /src/desktop.css
+PM 4:22:57 [vite] (client) hmr update /src/desktop.css
+PM 4:23:12 [vite] (client) hmr update /src/desktop.css
+PM 4:23:27 [vite] (client) hmr update /src/desktop.css
