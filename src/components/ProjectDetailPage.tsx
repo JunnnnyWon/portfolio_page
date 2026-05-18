@@ -155,10 +155,6 @@ function StandardMediaGallery({ gallery, pageRef }: MediaGalleryProps) {
 }
 
 function MediaGallery({ gallery, pageRef }: MediaGalleryProps) {
-  if (gallery.slug === "hackathon-rewards") {
-    return <HackathonRewardsGallery gallery={gallery} />;
-  }
-
   return <StandardMediaGallery gallery={gallery} pageRef={pageRef} />;
 }
 
@@ -234,18 +230,8 @@ export function ProjectDetailPage({
                   transition={quickTransition}
                 >
                   <div className="detail-case__info">
-                    <div className="detail-case__heading">
-                      <span className="detail-case__index">
-                        {(index + 1).toString().padStart(2, "0")}
-                      </span>
-                      <div className="detail-case__eyebrow-group">
-                        <small>{caseStudy.eyebrow}</small>
-                        <span>{caseStudy.period}</span>
-                      </div>
-                    </div>
-
                     <div className="detail-case__title-row">
-                      <h3>{caseStudy.title}</h3>
+                      <h3>{String(index + 1).padStart(2, '0')}. {caseStudy.title}</h3>
                       {caseStudy.award ? (
                         <span className="detail-case__award">{caseStudy.award}</span>
                       ) : null}
