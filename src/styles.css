@@ -4440,7 +4440,7 @@ a {
   }
 
   .projects-card-stack > li:not(:first-child) {
-    margin-top: -4.5rem;
+    margin-top: 1.5rem;
   }
 
   .projects-card-stack > li:nth-child(odd) .projects-card {
@@ -4718,7 +4718,7 @@ a {
   }
 
   .projects-card-stack > li:not(:first-child) {
-    margin-top: -5rem;
+    margin-top: 1.5rem;
   }
 
   .projects-card {

@@ -43,10 +43,7 @@ export function ProjectsSection({
             aria-hidden="true"
             variants={fadeUp(20)}
           />
-          <motion.p variants={fadeUp(20)}>
-            작업 성격별로 바로 들어갈 수 있게 세 갈래로 정리했습니다. 각
-            카드를 누르면 해당 카테고리의 상세 페이지로 이어집니다.
-          </motion.p>
+
         </motion.div>
 
         <div className="projects-showcase">
