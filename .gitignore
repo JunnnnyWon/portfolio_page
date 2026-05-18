@@ -7,3 +7,13 @@ dist/
 tmp/
 agency-agents/
 .copilot/
+.agents/
+*.bak
+patch_*.py
+rebuild_*.py
+revert_*.py
+rewrite_*.py
+unify_*.py
+spatial_layout.py
+test_masonry.py
+test.txt
