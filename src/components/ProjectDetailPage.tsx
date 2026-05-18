@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import {
   type CSSProperties,
   useEffect,
@@ -33,6 +33,7 @@ type GalleryContent = {
 };
 
 type MediaGalleryProps = {
+  pageRef?: React.RefObject<HTMLDivElement | null>;
   gallery: GalleryContent;
 };
 
@@ -96,244 +97,69 @@ function HackathonRewardsGallery({ gallery }: MediaGalleryProps) {
   );
 }
 
-function StandardMediaGallery({ gallery }: MediaGalleryProps) {
-  const mediaRefs = useRef(new Map<string, GalleryMediaElement>());
-  const galleryRef = useRef<HTMLDivElement | null>(null);
-  const [frameSize, setFrameSize] = useState<GalleryFrameSize | null>(null);
-  const isShadowCorridor = gallery.slug === "shadow-corridor";
-  const isDevelopmentShowcase =
-    gallery.slug === "vesta" || gallery.slug === "kpi-overload";
-  const maxFrameHeight =
-    isShadowCorridor || isDevelopmentShowcase
-      ? COMPACT_GALLERY_FRAME_HEIGHT
-      : DEFAULT_GALLERY_FRAME_HEIGHT;
+function StandardMediaGallery({ gallery, pageRef }: MediaGalleryProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    // Provide the scroll container if available to track actual scroll position
+    container: pageRef as any,
+    offset: ["start end", "end start"],
+  });
 
-  const updateFrameSize = () => {
-    if (isShadowCorridor) {
-      const baseNode = mediaRefs.current.get(gallery.media[0]?.src ?? "");
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, 0]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [60, -60]);
 
-      if (!baseNode) {
-        return;
-      }
+  // Split media into two columns for Masonry Parallax Effect
+  const column1 = gallery.media.filter((_, i) => i % 2 === 0);
+  const column2 = gallery.media.filter((_, i) => i % 2 === 1);
 
-      const baseWidth =
-        baseNode instanceof HTMLVideoElement
-          ? baseNode.videoWidth
-          : baseNode.naturalWidth;
-      const baseHeight =
-        baseNode instanceof HTMLVideoElement
-          ? baseNode.videoHeight
-          : baseNode.naturalHeight;
-
-      if (baseWidth > 0 && baseHeight > 0) {
-        const galleryWidth =
-          galleryRef.current?.clientWidth ?? window.innerWidth;
-        const maxFrameWidth = Math.max(
-          220,
-          Math.min(galleryWidth - 32, 520),
-        );
-        const scale = Math.min(
-          1,
-          maxFrameHeight / baseHeight,
-          maxFrameWidth / baseWidth,
-        );
-        const nextSize = {
-          width: Math.round(baseWidth * scale),
-          height: Math.round(baseHeight * scale),
-        };
-
-        setFrameSize((current) => {
-          if (
-            current &&
-            current.width === nextSize.width &&
-            current.height === nextSize.height
-          ) {
-            return current;
-          }
-
-          return nextSize;
-        });
-      }
-
-      return;
-    }
-
-    const galleryWidth =
-      galleryRef.current?.clientWidth ?? window.innerWidth;
-    const maxFrameWidth = isDevelopmentShowcase
-      ? Math.max(
-          220,
-          Math.min(galleryWidth - 24, MOBILE_FIT_GALLERY_MAX_WIDTH),
-        )
-      : Number.POSITIVE_INFINITY;
-
-    const measured = Array.from(mediaRefs.current.values())
-      .map((node) => {
-        const width =
-          node instanceof HTMLVideoElement ? node.videoWidth : node.naturalWidth;
-        const height =
-          node instanceof HTMLVideoElement ? node.videoHeight : node.naturalHeight;
-
-        if (width <= 0 || height <= 0) {
-          return null;
-        }
-
-        const scale = Math.min(1, maxFrameHeight / height, maxFrameWidth / width);
-
-        return {
-          width: Math.round(width * scale),
-          height: Math.round(height * scale),
-        };
-      })
-      .filter((size): size is GalleryFrameSize => size !== null);
-
-    if (!measured.length) {
-      return;
-    }
-
-    const nextSize = measured.reduce<GalleryFrameSize>(
-      (largest, current) => ({
-        width: Math.max(largest.width, current.width),
-        height: Math.max(largest.height, current.height),
-      }),
-      measured[0],
-    );
-
-    setFrameSize((current) => {
-      if (
-        current &&
-        current.width === nextSize.width &&
-        current.height === nextSize.height
-      ) {
-        return current;
-      }
-
-      return nextSize;
-    });
-  };
-
-  useEffect(() => {
-    setFrameSize(null);
-    window.requestAnimationFrame(updateFrameSize);
-  }, [gallery.slug, maxFrameHeight]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      window.requestAnimationFrame(updateFrameSize);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [gallery.slug, maxFrameHeight]);
-
-  const getScaledWidth = (src: string) => {
-    if (frameSize === null) {
-      return undefined;
-    }
-
-    if (isShadowCorridor || isDevelopmentShowcase) {
-      return frameSize.width;
-    }
-
-    const node = mediaRefs.current.get(src);
-
-    if (!node) {
-      return frameSize.width;
-    }
-
-    const width =
-      node instanceof HTMLVideoElement ? node.videoWidth : node.naturalWidth;
-    const height =
-      node instanceof HTMLVideoElement ? node.videoHeight : node.naturalHeight;
-
-    if (width <= 0 || height <= 0) {
-      return frameSize.width;
-    }
-
-    return Math.round((width * frameSize.height) / height);
-  };
-
-  const galleryStyle =
-    frameSize !== null
-      ? ({
-          "--detail-gallery-frame-height": `${frameSize.height}px`,
-        } as CSSProperties)
-      : undefined;
+  const renderMedia = (item: ProjectDetailMedia, idx: number, colIndex: number) => (
+    <figure
+      key={`${gallery.slug}-${item.src}-${colIndex}-${idx}`}
+      className={`detail-media detail-media--${item.type} masonry-item`}
+    >
+      <div className="detail-media__frame">
+        {item.type === "image" ? (
+          <img src={item.src} alt={item.alt} loading="lazy" />
+        ) : (
+          <video
+            src={item.src}
+            poster={item.poster}
+            controls
+            preload="metadata"
+            playsInline
+          />
+        )}
+      </div>
+    </figure>
+  );
 
   return (
-    <div className="detail-case__gallery-shell">
+    <div className="detail-case__gallery-shell detail-case__gallery-shell--masonry" ref={containerRef}>
       <div className="detail-case__gallery-header">
         <span>{gallery.headerLabel ?? "Gallery"}</span>
-        <small>{gallery.hintLabel ?? "Swipe to browse"}</small>
+        <small>{gallery.hintLabel ?? `${gallery.media.length} items insight`}</small>
       </div>
 
-      <div ref={galleryRef} className="detail-case__gallery" style={galleryStyle}>
-        {gallery.media.map((item) => (
-          <figure
-            key={`${gallery.slug}-${item.src}`}
-            className={`detail-media detail-media--${item.type}`}
-            style={
-              frameSize !== null
-                ? ({
-                    "--detail-gallery-media-width": `${getScaledWidth(item.src) ?? frameSize.width}px`,
-                    "--detail-gallery-media-height": `${frameSize.height}px`,
-                  } as CSSProperties)
-                : undefined
-            }
-          >
-            <div className="detail-media__frame">
-              {item.type === "image" ? (
-                <img
-                  ref={(node) => {
-                    if (node) {
-                      mediaRefs.current.set(item.src, node);
-                    } else {
-                      mediaRefs.current.delete(item.src);
-                    }
-                  }}
-                  src={item.src}
-                  alt={item.alt}
-                  loading="lazy"
-                  onLoad={() => {
-                    window.requestAnimationFrame(updateFrameSize);
-                  }}
-                />
-              ) : (
-                <video
-                  ref={(node) => {
-                    if (node) {
-                      mediaRefs.current.set(item.src, node);
-                    } else {
-                      mediaRefs.current.delete(item.src);
-                    }
-                  }}
-                  src={item.src}
-                  poster={item.poster}
-                  controls
-                  preload="metadata"
-                  playsInline
-                  onLoadedMetadata={() => {
-                    window.requestAnimationFrame(updateFrameSize);
-                  }}
-                />
-              )}
-            </div>
-            {item.caption ? <figcaption>{item.caption}</figcaption> : null}
-          </figure>
-        ))}
+      <div className="detail-case__gallery--masonry-grid">
+        <motion.div style={{ y: y1 }} className="masonry-column masonry-column--1">
+          {column1.map((item, i) => renderMedia(item, i, 1))}
+        </motion.div>
+        
+        <motion.div style={{ y: y2 }} className="masonry-column masonry-column--2">
+          {column2.map((item, i) => renderMedia(item, i, 2))}
+        </motion.div>
       </div>
     </div>
   );
 }
 
-function MediaGallery({ gallery }: MediaGalleryProps) {
+function MediaGallery({ gallery, pageRef }: MediaGalleryProps) {
   if (gallery.slug === "hackathon-rewards") {
     return <HackathonRewardsGallery gallery={gallery} />;
   }
 
-  return <StandardMediaGallery gallery={gallery} />;
+  return <StandardMediaGallery gallery={gallery} pageRef={pageRef} />;
 }
 
 export function ProjectDetailPage({
@@ -367,7 +193,7 @@ export function ProjectDetailPage({
             onNavigateHome();
           }}
         >
-          포트폴리오로 돌아가기
+          ← BACK TO PORTFOLIO
         </button>
       </header>
 
@@ -407,7 +233,7 @@ export function ProjectDetailPage({
                   whileHover={reducedMotion ? undefined : { y: -4 }}
                   transition={quickTransition}
                 >
-                  <div className="detail-case__copy">
+                  <div className="detail-case__info">
                     <div className="detail-case__heading">
                       <span className="detail-case__index">
                         {(index + 1).toString().padStart(2, "0")}
@@ -440,19 +266,21 @@ export function ProjectDetailPage({
                       ) : null}
                     </div>
 
-                    <MediaGallery
-                      gallery={{
-                        slug: caseStudy.slug,
-                        media: caseStudy.media,
-                      }}
-                    />
-
                     <ul className="detail-case__highlights">
                       {caseStudy.highlights.map((highlight) => (
                         <li key={highlight}>{highlight}</li>
                       ))}
                     </ul>
+                  </div>
 
+                  <div className="detail-case__media-window">
+                    <MediaGallery
+                      pageRef={pageRef}
+                      gallery={{
+                        slug: caseStudy.slug,
+                        media: caseStudy.media,
+                      }}
+                    />
                   </div>
                 </motion.article>
               ))}
@@ -509,6 +337,7 @@ export function ProjectDetailPage({
                 )}
 
                 <MediaGallery
+                  pageRef={pageRef}
                   gallery={{
                     slug: project.rewardsGallery.slug,
                     media: project.rewardsGallery.media,
