@@ -1,18 +1,36 @@
-import { startTransition, useState, type CSSProperties } from "react";
-import { profileModes, roleHistory, techStack } from "../data/portfolio";
+import {
+  startTransition,
+  useEffect,
+  useState,
+  type CSSProperties,
+} from "react";
+import { useReducedMotion } from "motion/react";
+import { profileModes, roleHistory, socialLinks, techStack } from "../data/portfolio";
+import { GithubIcon, LinkedInIcon } from "./Icons";
 
 type ProfileSectionProps = {
   progress: number;
   reducedMotion: boolean;
 };
 
+const TYPE_INTERVAL_MS = 55;
+
+const socialIconMap = {
+  github: GithubIcon,
+  linkedin: LinkedInIcon,
+} as const;
+
 export function ProfileSection({
   progress,
   reducedMotion,
 }: ProfileSectionProps) {
+  const systemReducedMotion = useReducedMotion();
+  const still = reducedMotion || systemReducedMotion === true;
+
   const eased = reducedMotion ? 1 : progress;
   const cardOffset = (1 - eased) * 42;
   const metaOffset = (1 - eased) * 56;
+
   const [activeModeIndex, setActiveModeIndex] = useState(
     Math.max(
       0,
@@ -20,6 +38,27 @@ export function ProfileSection({
     ),
   );
   const activeMode = profileModes[activeModeIndex];
+
+  const [typed, setTyped] = useState(() =>
+    still ? activeMode.prompt : "",
+  );
+
+  useEffect(() => {
+    if (still) {
+      setTyped(activeMode.prompt);
+      return;
+    }
+
+    setTyped("");
+    let length = 0;
+    const id = window.setInterval(() => {
+      length += 1;
+      setTyped(activeMode.prompt.slice(0, length));
+      if (length >= activeMode.prompt.length) window.clearInterval(id);
+    }, TYPE_INTERVAL_MS);
+
+    return () => window.clearInterval(id);
+  }, [activeMode.prompt, still]);
 
   const selectMode = (nextIndex: number) => {
     startTransition(() => {
@@ -34,24 +73,6 @@ export function ProfileSection({
   return (
     <section id="profile" className="scene scene--profile">
       <div className="scene__sticky profile-stage">
-        <div className="profile-stage__background" aria-hidden="true">
-          <img
-            className="profile-stage__ellipse profile-stage__ellipse--top"
-            src="/assets/profile/ellipse-8.svg"
-            alt=""
-          />
-          <img
-            className="profile-stage__ellipse profile-stage__ellipse--bottom"
-            src="/assets/profile/ellipse-7.svg"
-            alt=""
-          />
-          <img
-            className="profile-stage__noise"
-            src="/assets/profile/noise.png"
-            alt=""
-          />
-        </div>
-
         <div
           className="profile-card"
           style={
@@ -66,84 +87,85 @@ export function ProfileSection({
             <h2>프로필</h2>
           </div>
 
-          <div className="profile-card__canvas">
-            <div className="profile-card__frame">
-              <div className="profile-card__photo-shell">
-                <img
-                  className="profile-card__photo"
-                  src="/assets/profile/profile-photo.png"
-                  alt="조원준 프로필 사진"
-                />
-                <div
-                  className="profile-card__photo-overlay"
-                  aria-hidden="true"
-                />
-                <div className="profile-card__photo-frame" aria-hidden="true" />
-              </div>
+          <div className="prompt-console" role="group" aria-label="프로필 생성 콘솔">
+            <div
+              className="prompt-console__presets"
+              role="tablist"
+              aria-label="프로필 생성 프리셋"
+            >
+              {profileModes.map((mode, index) => (
+                <button
+                  key={mode.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={index === activeModeIndex}
+                  className={
+                    index === activeModeIndex
+                      ? "prompt-console__preset is-active"
+                      : "prompt-console__preset"
+                  }
+                  onClick={() => selectMode(index)}
+                >
+                  {mode.label}
+                </button>
+              ))}
             </div>
 
-            <div className="profile-card__editor">
-              <div className="profile-editor__toolbar">
-                <span className="profile-editor__chip">Generative Fill</span>
-                <span className="profile-editor__icon profile-editor__icon--crop" />
-                <span className="profile-editor__icon profile-editor__icon--layers" />
-                <span className="profile-editor__icon profile-editor__icon--spark" />
-                <span className="profile-editor__icon profile-editor__icon--mask" />
-                <span className="profile-editor__dots">...</span>
-                <span className="profile-editor__mute">Deselect</span>
-              </div>
-
-              <div
-                className="profile-editor__modes"
-                role="tablist"
-                aria-label="프로필 생성 프리셋"
+            <div className="prompt-console__bar">
+              <span className="prompt-console__prefix" aria-hidden="true">
+                ›
+              </span>
+              <p className="prompt-console__text" aria-live="polite">
+                {typed}
+                <span className="prompt-console__cursor" aria-hidden="true" />
+              </p>
+              <button
+                type="button"
+                className="prompt-console__generate"
+                onClick={cycleMode}
               >
-                {profileModes.map((mode, index) => (
-                  <button
-                    key={mode.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={index === activeModeIndex}
-                    className={
-                      index === activeModeIndex
-                        ? "profile-editor__mode is-active"
-                        : "profile-editor__mode"
-                    }
-                    onClick={() => selectMode(index)}
-                  >
-                    {mode.label}
-                  </button>
-                ))}
-              </div>
-
-              <div className="profile-editor__prompt" role="group" aria-label="생성 프롬프트">
-                <span className="profile-editor__scroll" />
-                <button
-                  type="button"
-                  className="profile-editor__prompt-text"
-                  onClick={cycleMode}
-                  aria-label={`${activeMode.prompt} 프리셋 순환`}
-                >
-                  {activeMode.prompt}
-                </button>
-                <span className="profile-editor__action">
-                  <button
-                    type="button"
-                    className="profile-editor__generate"
-                    onClick={cycleMode}
-                  >
-                    Generate
-                  </button>
-                  <span className="profile-editor__check" aria-hidden="true" />
-                </span>
-              </div>
+                Generate
+              </button>
             </div>
           </div>
 
-          <div className="profile-card__name-wrap">
-            <h3 className="profile-card__name">조원준</h3>
-            <p className="profile-card__headline">{activeMode.headline}</p>
-            <p className="profile-card__subcopy">{activeMode.subcopy}</p>
+          <div
+            className="profile-output"
+            key={activeMode.id}
+            data-still={still}
+          >
+            <div className="profile-output__portrait">
+              <img
+                className="profile-output__photo"
+                src="/assets/profile/profile-photo.png"
+                alt="조원준 프로필 사진"
+              />
+              <div className="profile-output__photo-overlay" aria-hidden="true" />
+            </div>
+
+            <div className="profile-card__name-wrap">
+              <h3 className="profile-card__name">조원준</h3>
+              <p className="profile-card__headline">{activeMode.headline}</p>
+              <p className="profile-card__subcopy">{activeMode.subcopy}</p>
+
+              <div className="profile-social" aria-label="소셜 링크">
+                {socialLinks.map((item) => {
+                  const Icon = socialIconMap[item.key];
+                  return (
+                    <a
+                      key={item.key}
+                      className="profile-social__link"
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Icon className="profile-social__icon" />
+                      <span>{item.label}</span>
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
           <div

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="320" viewBox="0 0 512 320" role="img" aria-label="Summer Vacance theme cover">
+  <rect width="512" height="320" rx="36" fill="#8EE3EF"/>
+  <path d="M0 226c74-44 142-48 204-12s133 32 204-12c42-26 76-32 104-18v136H0z" fill="#FFE6A7"/>
+  <circle cx="402" cy="82" r="48" fill="#FFCF5C"/>
+  <text x="48" y="96" font-family="Verdana, sans-serif" font-size="42" font-weight="700" fill="#187D8E">Summer</text>
+  <text x="48" y="144" font-family="Verdana, sans-serif" font-size="42" font-weight="700" fill="#187D8E">Vacance</text>
+</svg>

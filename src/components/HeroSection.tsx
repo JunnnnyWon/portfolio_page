@@ -1,5 +1,5 @@
-import { motion } from "motion/react";
-import { fadeUp, quickTransition, staggerChildren } from "../lib/motion";
+import { motion, useScroll, useTransform } from "motion/react";
+import { fadeUp, staggerChildren } from "../lib/motion";
 
 type HeroSectionProps = {
   progress: number;
@@ -9,6 +9,11 @@ type HeroSectionProps = {
 export function HeroSection({ progress: _progress, reducedMotion }: HeroSectionProps) {
   const reveal = reducedMotion ? undefined : "hidden";
   const animate = "visible";
+
+  // Scroll-driven parallax for 3D depth effect
+  const { scrollYProgress } = useScroll();
+  const stairsY = useTransform(scrollYProgress, [0, 1], reducedMotion ? [0, 0] : [-30, 30]);
+  const orbY = useTransform(scrollYProgress, [0, 1], reducedMotion ? [0, 0] : [-15, 15]);
 
   return (
     <section id="hero" className="scene scene--hero">
@@ -22,18 +27,6 @@ export function HeroSection({ progress: _progress, reducedMotion }: HeroSectionP
           <strong>조원준 포트폴리오</strong>
           <span>CHO WON JUN</span>
         </motion.div>
-
-        <motion.nav
-          className="hero-stage__nav"
-          aria-label="히어로 섹션 탐색"
-          variants={staggerChildren(0.06)}
-          initial={reveal}
-          animate={animate}
-        >
-          <motion.a href="#profile" variants={fadeUp(18, 0.04)} whileHover={{ y: -1.5 }} transition={quickTransition}>소개</motion.a>
-          <motion.a href="#projects" variants={fadeUp(18, 0.08)} whileHover={{ y: -1.5 }} transition={quickTransition}>프로젝트</motion.a>
-          <motion.a href="#contact" variants={fadeUp(18, 0.12)} whileHover={{ y: -1.5 }} transition={quickTransition}>연락처</motion.a>
-        </motion.nav>
 
         <motion.h1
           className="hero-stage__role"
@@ -51,13 +44,19 @@ export function HeroSection({ progress: _progress, reducedMotion }: HeroSectionP
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
         >
-          <img
+          <motion.img
             className="hero-stage__stairs"
             src="/assets/hero/figma-stairs.png"
             alt=""
+            style={{ y: stairsY }}
           />
           <div className="hero-stage__wordmark">
-            <img className="hero-stage__orb" src="/assets/hero/orb.png" alt="" />
+            <motion.img
+              className="hero-stage__orb"
+              src="/assets/hero/orb.png"
+              alt=""
+              style={{ y: orbY }}
+            />
             <span className="hero-stage__wordmark-port">PORT</span>
             <span className="hero-stage__wordmark-folio">FOLIO</span>
             <img className="hero-stage__cursor" src="/assets/hero/cursor.png" alt="" />
@@ -71,17 +70,9 @@ export function HeroSection({ progress: _progress, reducedMotion }: HeroSectionP
           animate={animate}
         >
           <motion.p className="hero-stage__intro" variants={fadeUp(18)}>
-            안녕하세요! 저는 AI 기술과 3D 엔진을 기반으로 콘텐츠를 개발하는{" "}
-            <strong>조원준</strong>입니다. 새로운 기술을 빠르게 익히고, 이를
-            실제로 구현 가능한 형태로 정리해내는 과정도 중요하게 생각합니다.
+            AI 기술과 3D 엔진을 연결해, 실험을 사용자가 직접 체감하는 콘텐츠로
+            구현합니다. <strong>조원준</strong>입니다.
           </motion.p>
-          <motion.p className="hero-stage__body" variants={fadeUp(18)}>
-            AI와 3D 엔진의 접점에서, 사용자가 직접 체감할 수 있는 콘텐츠를
-            만드는 개발자로 성장해가고자 합니다.
-          </motion.p>
-          <motion.div className="hero-stage__stars" variants={fadeUp(18)}>
-            ✦ ✦ ✦
-          </motion.div>
         </motion.div>
       </div>
     </section>

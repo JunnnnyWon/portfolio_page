@@ -28,38 +28,47 @@ export function useSectionTransitions(sectionIds: SectionId[]) {
       return;
     }
 
+    let frame = 0;
+
     const updateProgress = () => {
-      const viewportHeight = window.innerHeight;
-      const viewportCenter = viewportHeight / 2;
-      const next = makeProgress(ids);
-      let nextActive = ids[0];
-      let nearestDistance = Number.POSITIVE_INFINITY;
+      if (frame) return;
 
-      for (const element of elements) {
-        const rect = element.getBoundingClientRect();
-        const id = element.id as SectionId;
-        const total = rect.height + viewportHeight;
-        const raw = (viewportHeight - rect.top) / total;
-        next[id] = clamp(raw);
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        const viewportHeight = window.innerHeight;
+        const viewportCenter = viewportHeight / 2;
+        const next = makeProgress(ids);
+        let nextActive = ids[0];
+        let nearestDistance = Number.POSITIVE_INFINITY;
 
-        const sectionCenter = rect.top + rect.height / 2;
-        const distance = Math.abs(sectionCenter - viewportCenter);
+        for (const element of elements) {
+          const rect = element.getBoundingClientRect();
+          const id = element.id as SectionId;
+          const total = rect.height + viewportHeight;
+          const raw = (viewportHeight - rect.top) / total;
+          next[id] = clamp(raw);
 
-        if (distance < nearestDistance) {
-          nearestDistance = distance;
-          nextActive = id;
+          const sectionCenter = rect.top + rect.height / 2;
+          const distance = Math.abs(sectionCenter - viewportCenter);
+
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nextActive = id;
+          }
         }
-      }
 
-      setProgress(next);
-      setActiveId(nextActive);
+        setProgress(next);
+        setActiveId(nextActive);
+      });
     };
+
     updateProgress();
 
     window.addEventListener("scroll", updateProgress, { passive: true });
     window.addEventListener("resize", updateProgress);
 
     return () => {
+      if (frame) window.cancelAnimationFrame(frame);
       window.removeEventListener("scroll", updateProgress);
       window.removeEventListener("resize", updateProgress);
     };
