@@ -190,14 +190,14 @@ export const operatingServices: ShowcaseRepo[] = [
     context: "공모전 프로젝트",
   },
   {
-    name: "PLA Return",
+    name: "만듦 MANDEUM",
     description:
-      "Meshy AI로 만든 3D 모델을 친환경 필라멘트 출력과 주문, 배송까지 연결하는 3D 제작 서비스.",
-    homepage: "https://plareturn.space/app/",
+      "사진·글·프리셋으로 시작해 AI 3D 생성부터 미리보기, 제작 요청과 출력까지 이어지는 나만의 3D 굿즈 제작 서비스.",
+    homepage: "https://mandeum.world",
     kind: "service",
     language: "TypeScript",
     stack: ["Meshy AI", "3D", "Commerce"],
-    role: "3D 제작 서비스",
+    role: "3D 굿즈 제작 서비스",
     context: "지원사업 운영 서비스",
   },
 ];
